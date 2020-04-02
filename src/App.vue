@@ -1,32 +1,46 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="blue darken-3"
+      dark
+    >
+      <h2>API DOCS</h2>
+      <v-spacer></v-spacer>
+
+      <v-btn
+      @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+       fab
+        text
+      >
+        <v-icon>mdi-weather-night</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <HelloWorld/>
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import HelloWorld from './components/HelloWorld'
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    HelloWorld
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  data: () => ({
+    //
+  }),
+  mounted () {
+    this.$vuetify.theme.dark = true
   }
 }
+</script>
+<style  scoped>
+
 </style>

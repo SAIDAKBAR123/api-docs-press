@@ -1,60 +1,149 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container>
+    <v-row justify="center" align="center">
+      <v-col cols="2">
+        <v-select
+          v-model="selectedType"
+          :items="items"
+          item-text="name"
+           label="Select a category"
+        ></v-select>
+      </v-col>
+       <v-col cols="4">
+         <v-text-field
+         v-model="define"
+         color="blue darken-3"
+            label="About Code"
+          ></v-text-field>
+      </v-col>
+      <v-col cols="5">
+         <v-text-field
+         v-model="codeSource"
+         color="blue darken-3"
+            label="api code"
+          ></v-text-field>
+      </v-col>
+       <v-col cols="auto">
+         <v-btn color="blue darken-3" dark rounded raised @click="addCommit">Commit</v-btn>
+      </v-col>
+    </v-row>
+    <v-row class="my-2" justify="center" v-for="(item,i) in codes" :key="i">
+       <v-col class="py-0" cols="8">
+         <v-card class="py-0">
+           <v-card-title>{{item.title}}</v-card-title>
+           <v-card-subtitle class="py-0"> <p class="descript">{{item.description}}</p></v-card-subtitle>
+           <v-row class="mx-2 py-0" justify="space-between" align="center" align-self="center">
+             <v-col cols="1">
+               <v-btn text outlined :color="item.color">{{item.type}}</v-btn>
+             </v-col>
+             <v-col cols="8">
+                 <p class="codeing pt-2">  {{item.code}}</p>
+             </v-col>
+              <v-col cols="auto">
+               <v-btn  @click="getCode(item.code)"><v-icon>mdi-content-copy</v-icon></v-btn>
+             </v-col>
+           </v-row>
+         </v-card>
+       </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String
+
+  data: () => ({
+    selectedType: '',
+    codeSource: '',
+    define: '',
+    items: [
+      { id: 1, name: 'GET', color: '' },
+      { id: 2, name: 'POST', color: '' },
+      { id: 3, name: 'DELETE', color: '' },
+      { id: 4, name: 'UPDATE', color: '' }
+
+    ],
+    codes: [
+      {
+        type: 'POST',
+        color: 'warning',
+        code: '/create/user',
+        title: 'USERS',
+        description: '// this part will be available aftar a day'
+      },
+      {
+        type: 'GET',
+        color: 'primary',
+        title: 'USERS',
+        code: '/create/user=?all',
+        description: '// test'
+      },
+      {
+        type: 'DELETE',
+        color: 'error',
+        title: 'USERS',
+        code: '/create/user/{userID}',
+        description: '//test'
+      }
+    ]
+  }),
+  methods: {
+    getCode (code) {
+      this.$clipboard(code)
+    },
+    addCommit () {
+      console.log(this.selectedType)
+      if (this.selectedType === 'DELETE') {
+        this.codes.unshift({
+          type: this.selectedType,
+          color: 'error',
+          title: this.define,
+          code: this.codeSource,
+          description: '//test mode is on'
+        })
+      } else if (this.selectedType === 'GET') {
+        this.codes.unshift({
+          type: this.selectedType,
+          color: 'primary',
+          title: this.define,
+          code: this.codeSource,
+          description: '//test mode is on'
+        })
+      } else if (this.selectedType === 'POST') {
+        this.codes.unshift({
+          type: this.selectedType,
+          color: 'warning',
+          title: this.define,
+          code: this.codeSource,
+          description: '//test mode is on'
+        })
+      } else if (this.selectedType === 'UPDATE') {
+        this.codes.unshift({
+          type: this.selectedType,
+          color: 'success',
+          title: this.define,
+          code: this.codeSource,
+          description: '//test mode is on'
+        })
+      }
+    }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+.codeing {
+ font-family: 'Source Code Pro', monospace;
+  font-weight: 500;
+  font-size:16pt;
+  word-spacing: 4px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.descript {
+font-family: 'Open Sans', sans-serif;
+font-weight: 600;
+font-size: 13pt;
+color: rgb(21, 121, 21)
 }
 </style>
