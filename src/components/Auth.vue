@@ -6,7 +6,7 @@
                  overlay-color="#111111"
                     v-model="dialog"
                     persistent
-                    width="500"
+                    width="600"
                     >
                     <v-card>
                         <v-card-title
@@ -17,22 +17,29 @@
                         </v-card-title>
 
                         <v-divider></v-divider>
-                        <v-text-field
+               <v-card-text>
+                           <v-row>
+                           <v-col>
+                                <v-text-field
                             v-model="username"
                             label="Username"
-                            solo
+
                         ></v-text-field>
                          <v-text-field
                          v-model="password"
                             label="Password"
-                            solo
+
                         ></v-text-field>
+                           </v-col>
+                       </v-row>
+               </v-card-text>
                         <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn
+                        block
                             color="primary"
-                            text
                             outlined
+                            large
                             @click="checker"
                         >
                             Enter
