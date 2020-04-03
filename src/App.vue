@@ -1,11 +1,12 @@
 <template>
   <v-app>
     <v-app-bar
+      flat
       app
-      color="blue darken-3"
+      color="#2E343B"
       dark
     >
-      <h2>API DOCS</h2>
+      <h2>SMA</h2>
       <v-spacer></v-spacer>
 
       <v-btn
@@ -18,26 +19,24 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'App',
 
   components: {
-    HelloWorld
+
   },
 
   data: () => ({
     //
   }),
   mounted () {
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = false
   }
 }
 </script>

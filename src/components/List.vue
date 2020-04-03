@@ -138,7 +138,6 @@ export default {
  font-family: 'Source Code Pro', monospace;
   font-weight: 500;
   font-size:16pt;
-  word-spacing: 4px;
 }
 .descript {
 font-family: 'Open Sans', sans-serif;
