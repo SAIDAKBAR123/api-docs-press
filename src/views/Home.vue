@@ -25,16 +25,16 @@
       </v-col>
     </v-row>
     <v-row >
-      <v-col v-for="(item,i) in newProject.data" :key="i" cols="3">
+      <v-col v-for="(item,i) in list" :key="i" cols="3">
         <v-card>
           <v-card-title class="py-1 px-1">
-            <h4 class="px-1">{{item.title}}</h4>
+            <h4 class="px-1">{{item.title.substring(0,16)+ '...'}}</h4>
             <v-spacer>
             </v-spacer>
             <v-btn dense text fab><v-icon>mdi-dots-horizontal</v-icon></v-btn>
           </v-card-title>
           <v-card-text>
-            <p>Done {{item.posts.length}} posts</p>
+            <p>Done 3 posts</p>
             <v-progress-linear height="10" value="15"></v-progress-linear>
             <p>{{item.description}}</p>
              <v-row>
@@ -87,10 +87,18 @@ export default {
     Project,
     Auth
   },
+  computed: {
+    list () {
+      return this.$store.state.user.projects
+    }
+  },
   methods: {
     createProject () {
       this.newProject.flag = true
     }
+  },
+  created () {
+    this.$store.dispatch('getProjects')
   }
 }
 </script>

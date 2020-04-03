@@ -57,15 +57,24 @@ export default {
   },
   methods: {
     createProject () {
-      this.newProject.data.unshift(
+      // this.newProject.data.unshift(
+      //   {
+      //     title: this.project.title,
+      //     posts: [],
+      //     description: this.project.description,
+      //     date: new Date().getDate()
+      //   }
+      // )
+      this.$store.dispatch('createProject',
         {
-          id: 2,
           title: this.project.title,
           posts: [],
           description: this.project.description,
-          date: new Date().getDate()
+          date: new Date().toISOString()
         }
-      )
+      ).then(() => {
+        this.$store.dispatch('getProjects')
+      })
       this.newProject.flag = false
       console.log(this.project)
     }

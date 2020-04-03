@@ -64,10 +64,9 @@ export default {
   methods: {
     checker () {
       // eslint-disable-next-line eqeqeq
-      if (this.username == 'azik98' && this.password == 'azik98') {
+      this.$store.dispatch('signIn', { email: this.username, password: this.password }).then(() => {
         this.dialog = false
-        return 0
-      }
+      }).catch((err) => console.log(err))
     }
   },
   created () {
