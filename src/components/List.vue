@@ -37,7 +37,7 @@
       </v-col>
     </v-row>
     <template v-if="codes.length > 0">
-      <v-row class="my-2" justify="center" v-for="(item, i) in codes" :key="i">
+      <v-row class="my-2" justify="start" v-for="(item, i) in codes" :key="i">
         <v-col class="py-0" cols="8">
           <v-card class="py-0">
             <v-card-title
@@ -62,11 +62,16 @@
                 <p class="codeing pt-2">{{ item.code }}</p>
               </v-col>
               <v-col cols="auto">
-                <v-btn @click="getCode(item.code)"
+                <v-btn text fab @click="getCode(item.code)"
                   ><v-icon>mdi-content-copy</v-icon></v-btn
                 >
               </v-col>
             </v-row>
+          </v-card>
+        </v-col>
+        <v-col class="py-0" cols="auto">
+          <v-card tile flat class="transparent">
+            <prism-editor readonly :code="code" lineNumbers language="js"></prism-editor>
           </v-card>
         </v-col>
       </v-row>
@@ -84,6 +89,20 @@ export default {
   name: 'HelloWorld',
   props: ['id'],
   data: () => ({
+    code: `const routes = [
+  {
+    path: '/',
+    name: '',
+    component: Home
+  },
+  {
+    path: '/list/:id',
+    name: 'List',
+    props: true,
+    component: () => import('../components/List.vue')
+  }
+
+]`,
     selectedType: '',
     codeSource: '',
     define: '',
@@ -198,8 +217,9 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
 .codeing {
   font-family: "Source Code Pro", monospace;
-  font-weight: 500;
-  font-size: 16pt;
+  font-weight: 400;
+  word-spacing: 2px;
+  font-size: 13pt;
 }
 .descript {
   font-family: "Open Sans", sans-serif;
