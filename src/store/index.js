@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     user: {
       name: localStorage.getItem('uname') || '',
-      id: localStorage.getItem('uid') || '',
+      id: localStorage.getItem('userid') || '',
       projects: []
     },
     apiList: [],
@@ -34,7 +34,7 @@ export default new Vuex.Store({
   actions: {
     logOut ({ commit }) {
       firebase.auth().signOut()
-      localStorage.removeItem('uid')
+      localStorage.removeItem('userid')
       localStorage.removeItem('uname')
       commit('SET_USER', { id: null })
     },
@@ -49,7 +49,7 @@ export default new Vuex.Store({
           projects: []
         }
         localStorage.setItem('uname', res.user.email)
-        localStorage.setItem('uid', res.user.uid)
+        localStorage.setItem('userid', res.user.uid)
         commit('SET_USER', newUser)
       }).catch(err => {
         commit('SET_ERROR_MSG', err.message)
