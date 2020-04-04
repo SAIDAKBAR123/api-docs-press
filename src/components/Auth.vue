@@ -31,6 +31,15 @@
 
                         ></v-text-field>
                            </v-col>
+                           <v-col v-if="$store.state.error.length > 0" cols="12">
+                             <v-alert
+                            dense
+                            outlined
+                            type="error"
+                          >
+                            {{$store.state.error}}
+                          </v-alert>
+                           </v-col>
                        </v-row>
                </v-card-text>
                         <v-card-actions>
@@ -56,24 +65,30 @@
 export default {
   data () {
     return {
-      dialog: false,
+      alert: false,
       username: '',
       password: ''
+    }
+  },
+  computed: {
+    dialog () {
+      return this.$store.state.user.id == null || this.$store.state.user.id === ''
     }
   },
   methods: {
     checker () {
       // eslint-disable-next-line eqeqeq
       this.$store.dispatch('signIn', { email: this.username, password: this.password }).then(() => {
-        this.dialog = false
       }).catch((err) => console.log(err))
     }
-  },
-  created () {
-    setTimeout(() => {
-      this.dialog = true
-    }, 0)
   }
+  // created () {
+  //   if (this.$store.state.user.id.length > 0) {
+  //     return 1
+  //   } else {
+  //     this.dialog = true
+  //   }
+  // }
 }
 </script>
 

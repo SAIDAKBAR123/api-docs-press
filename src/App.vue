@@ -8,7 +8,7 @@
     >
       <h2>SMA</h2>
       <v-spacer></v-spacer>
-
+      <v-btn  text tile @click="logout">logout<v-icon>mdi-exit</v-icon></v-btn>
       <v-btn
       @click="$vuetify.theme.dark = !$vuetify.theme.dark"
        fab
@@ -31,9 +31,14 @@ export default {
   components: {
 
   },
+  methods: {
+    logout () {
+      this.$store.dispatch('logOut')
+    }
+  },
 
   data: () => ({
-    //
+
   }),
   mounted () {
     this.$vuetify.theme.dark = false

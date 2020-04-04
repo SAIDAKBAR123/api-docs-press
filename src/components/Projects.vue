@@ -51,24 +51,16 @@ export default {
       project: {
         description: '',
         title: '',
-        id: ''
+        id: '',
+        posts: []
       }
     }
   },
   methods: {
     createProject () {
-      // this.newProject.data.unshift(
-      //   {
-      //     title: this.project.title,
-      //     posts: [],
-      //     description: this.project.description,
-      //     date: new Date().getDate()
-      //   }
-      // )
       this.$store.dispatch('createProject',
         {
           title: this.project.title,
-          posts: [],
           description: this.project.description,
           date: new Date().toISOString()
         }
@@ -76,7 +68,6 @@ export default {
         this.$store.dispatch('getProjects')
       })
       this.newProject.flag = false
-      console.log(this.project)
     }
   }
 }

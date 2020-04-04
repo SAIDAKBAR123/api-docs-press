@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-row>
+      <v-col>
+        <v-btn to="/"  text color="primary"> <v-icon left>mdi-backburger</v-icon> Back</v-btn>
+      </v-col>
+    </v-row>
     <v-row justify="center" align="center">
       <v-col cols="2">
         <v-select
@@ -52,7 +57,7 @@
 <script>
 export default {
   name: 'HelloWorld',
-
+  props: ['id'],
   data: () => ({
     selectedType: '',
     codeSource: '',
@@ -64,30 +69,21 @@ export default {
       { id: 4, name: 'UPDATE', color: '' }
 
     ],
-    codes: [
+    codess: [
       {
         type: 'POST',
         color: 'warning',
         code: '/create/user',
         title: 'USERS',
         description: '// this part will be available aftar a day'
-      },
-      {
-        type: 'GET',
-        color: 'primary',
-        title: 'USERS',
-        code: '/create/user=?all',
-        description: '// test'
-      },
-      {
-        type: 'DELETE',
-        color: 'error',
-        title: 'USERS',
-        code: '/create/user/{userID}',
-        description: '//test'
       }
     ]
   }),
+  computed: {
+    codes () {
+      return this.$store.state.apiList
+    }
+  },
   methods: {
     getCode (code) {
       this.$clipboard(code)
@@ -95,39 +91,78 @@ export default {
     addCommit () {
       console.log(this.selectedType)
       if (this.selectedType === 'DELETE') {
-        this.codes.unshift({
-          type: this.selectedType,
-          color: 'error',
-          title: this.define,
-          code: this.codeSource,
-          description: '//test mode is on'
-        })
+        this.$store.dispatch('addApi',
+          {
+            key: this.id,
+            type: this.selectedType,
+            color: 'error',
+            title: this.define,
+            code: this.codeSource,
+            description: '//test mode is on'
+          }
+        ).then(() => {
+          this.selectedType = ''
+          this.define = ''
+          this.description = ''
+          this.codeSource = ''
+          this.$store.dispatch('getApiList', { key: this.id })
+        }).catch(err => console.log(err))
       } else if (this.selectedType === 'GET') {
-        this.codes.unshift({
-          type: this.selectedType,
-          color: 'primary',
-          title: this.define,
-          code: this.codeSource,
-          description: '//test mode is on'
-        })
+        this.$store.dispatch('addApi',
+          {
+            key: this.id,
+            type: this.selectedType,
+            color: 'error',
+            title: this.define,
+            code: this.codeSource,
+            description: '//test mode is on'
+          }
+        ).then(() => {
+          this.selectedType = ''
+          this.define = ''
+          this.description = ''
+          this.codeSource = ''
+          this.$store.dispatch('getApiList', { key: this.id })
+        }).catch(err => console.log(err))
       } else if (this.selectedType === 'POST') {
-        this.codes.unshift({
-          type: this.selectedType,
-          color: 'warning',
-          title: this.define,
-          code: this.codeSource,
-          description: '//test mode is on'
-        })
+        this.$store.dispatch('addApi',
+          {
+            key: this.id,
+            type: this.selectedType,
+            color: 'error',
+            title: this.define,
+            code: this.codeSource,
+            description: '//test mode is on'
+          }
+        ).then(() => {
+          this.selectedType = ''
+          this.define = ''
+          this.description = ''
+          this.codeSource = ''
+          this.$store.dispatch('getApiList', { key: this.id })
+        }).catch(err => console.log(err))
       } else if (this.selectedType === 'UPDATE') {
-        this.codes.unshift({
-          type: this.selectedType,
-          color: 'success',
-          title: this.define,
-          code: this.codeSource,
-          description: '//test mode is on'
-        })
+        this.$store.dispatch('addApi',
+          {
+            key: this.id,
+            type: this.selectedType,
+            color: 'error',
+            title: this.define,
+            code: this.codeSource,
+            description: '//test mode is on'
+          }
+        ).then(() => {
+          this.selectedType = ''
+          this.define = ''
+          this.description = ''
+          this.codeSource = ''
+          this.$store.dispatch('getApiList', { key: this.id })
+        }).catch(err => console.log(err))
       }
     }
+  },
+  created () {
+    this.$store.dispatch('getApiList', { key: this.id })
   }
 }
 </script>

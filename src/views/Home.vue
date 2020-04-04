@@ -24,11 +24,12 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row >
-      <v-col v-for="(item,i) in list" :key="i" cols="3">
+      <transition name="slide-fade">
+    <v-row v-if="list.length >0" >
+      <v-col  v-for="(item,i) in list" :key="i" cols="3">
         <v-card>
           <v-card-title class="py-1 px-1">
-            <h4 class="px-1">{{item.title.substring(0,16)+ '...'}}</h4>
+            <h4 class="px-1">{{item.title.substring(0,18)+ '...'}}</h4>
             <v-spacer>
             </v-spacer>
             <v-btn dense text fab><v-icon>mdi-dots-horizontal</v-icon></v-btn>
@@ -57,9 +58,16 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <project :newProject="newProject" />
-      <auth />
     </v-row>
+    <v-row v-else justify="center">
+      <v-col cols="auto">
+        <h1 class="text-center display-1 font-weight-light my-4">There is no project yet</h1>
+        <v-img max-width="320" src="https://www.jing.fm/clipimg/full/111-1115683_blank-flat-blue-without-solid-lines-or-mac.png"></v-img>
+      </v-col>
+    </v-row>
+      </transition>
+     <project :newProject="newProject" />
+      <auth />
   </v-container>
 </template>
 
@@ -103,6 +111,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(20px);
+  opacity: 0;
+}
 </style>
