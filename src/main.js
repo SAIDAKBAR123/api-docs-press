@@ -5,9 +5,10 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Clipboard from 'v-clipboard'
 import * as firebase from 'firebase'
+import EditProject from './components/EditProject.vue'
 Vue.use(Clipboard)
 Vue.config.productionTip = false
-
+Vue.component('edit-dialog', EditProject)
 new Vue({
   router,
   store,

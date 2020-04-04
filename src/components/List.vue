@@ -32,7 +32,8 @@
          <v-btn color="blue darken-3" dark rounded raised @click="addCommit">Commit</v-btn>
       </v-col>
     </v-row>
-    <v-row class="my-2" justify="center" v-for="(item,i) in codes" :key="i">
+    <template v-if="codes.length > 0">
+    <v-row  class="my-2" justify="center" v-for="(item,i) in codes" :key="i">
        <v-col class="py-0" cols="8">
          <v-card class="py-0">
            <v-card-title>{{item.title}}</v-card-title>
@@ -51,6 +52,12 @@
          </v-card>
        </v-col>
     </v-row>
+    </template>
+        <v-progress-linear
+          v-else
+      indeterminate
+      color="yellow darken-2"
+    ></v-progress-linear>
   </v-container>
 </template>
 
@@ -69,15 +76,7 @@ export default {
       { id: 4, name: 'UPDATE', color: '' }
 
     ],
-    codess: [
-      {
-        type: 'POST',
-        color: 'warning',
-        code: '/create/user',
-        title: 'USERS',
-        description: '// this part will be available aftar a day'
-      }
-    ]
+    codess: []
   }),
   computed: {
     codes () {

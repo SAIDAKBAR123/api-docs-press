@@ -57,12 +57,17 @@ export default {
     }
   },
   methods: {
+    getTime () {
+      const today = new Date()
+      const date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()
+      return date
+    },
     createProject () {
       this.$store.dispatch('createProject',
         {
           title: this.project.title,
           description: this.project.description,
-          date: new Date().toISOString()
+          dates: this.getTime()
         }
       ).then(() => {
         this.$store.dispatch('getProjects')

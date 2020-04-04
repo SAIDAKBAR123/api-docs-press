@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      name: '',
+      name: localStorage.getItem('uname') || '',
       id: localStorage.getItem('uid') || '',
       projects: []
     },
@@ -19,6 +19,7 @@ export default new Vuex.Store({
     },
     SET_USER (state, payload) {
       state.user.id = payload.id
+      state.user.name = payload.name
     },
     CREATE_PROJECT (state, payload) {
       state.user.projects.push(payload)
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     logOut ({ commit }) {
       firebase.auth().signOut()
       localStorage.removeItem('uid')
+      localStorage.removeItem('uname')
       commit('SET_USER', { id: null })
     },
     autoSignIn ({ commit }, payload) {
@@ -43,9 +45,10 @@ export default new Vuex.Store({
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password).then(res => {
         const newUser = {
           id: res.user.uid,
-          name: '',
+          name: res.user.email,
           projects: []
         }
+        localStorage.setItem('uname', res.user.email)
         localStorage.setItem('uid', res.user.uid)
         commit('SET_USER', newUser)
       }).catch(err => {
@@ -78,12 +81,22 @@ export default new Vuex.Store({
             id: key,
             description: obj[key].description,
             title: obj[key].title,
-            date: obj[key].date,
+            dates: obj[key].dates,
             creatorId: obj[key].creatorId
           })
           commit('SET_PROJECTS', projects)
         }
       }).catch(err => console.log(err))
+    },
+
+    updateProject ({ commit }, payload) {
+      const updatedObj = {
+        title: payload.title,
+        description: payload.description
+      }
+      firebase.database().ref('projectLists').child(payload.id).update(updatedObj).then(res => {
+        console.log(res)
+      }).catch(err => { console.log(err) })
     },
     addApi ({ commit }, payload) {
       const propertyKey = payload.key
@@ -110,5 +123,10 @@ export default new Vuex.Store({
     }
   },
   modules: {
+  },
+  getters: {
+    isCreator (state, payload) {
+      state.user.id = payload
+    }
   }
 })
