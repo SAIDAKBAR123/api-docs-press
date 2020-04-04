@@ -100,7 +100,6 @@ export default {
   },
   computed: {
     user_name () {
-      console.log(this.$store.state.user)
       return localStorage.getItem('uname')
     },
     list () {

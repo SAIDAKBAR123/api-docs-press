@@ -101,8 +101,7 @@ export default new Vuex.Store({
     addApi ({ commit }, payload) {
       const propertyKey = payload.key
       firebase.database().ref(`projectLists/${propertyKey}/apiList`).push(payload).then(res => {
-        console.log(res)
-      })
+      }).catch(err => console.log(err))
     },
     getApiList ({ commit }, payload) {
       const propertyKey = payload.key
@@ -111,15 +110,32 @@ export default new Vuex.Store({
         const obj = data.val()
         for (const key in obj) {
           api.push({
+            id: key,
             type: obj[key].type,
             color: obj[key].color,
             code: obj[key].code,
             title: obj[key].title,
-            description: obj[key].description
+            key: obj[key].key,
+            description: obj[key].description,
+            creatorId: obj[key].creatorId
           })
           commit('SET_APILIST', api)
         }
       }).catch(err => console.log(err))
+    },
+    updateApi ({ commit }, payload) {
+      const updatedObj = {
+        title: payload.title,
+        code: payload.code,
+        color: payload.color,
+        type: payload.type
+      }
+      firebase.database().ref(`projectLists/${payload.key}/apiList`).child(payload.id).update(updatedObj).then(res => {
+      }).catch(err => { console.log(err) })
+    },
+    removeApi ({ commit }, payload) {
+      firebase.database().ref(`projectLists/${payload.key}/apiList`).child(payload.id).remove().then(res => {
+      }).catch(err => { console.log(err) })
     }
   },
   modules: {

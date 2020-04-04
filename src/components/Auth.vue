@@ -8,12 +8,16 @@
                     persistent
                     width="600"
                     >
-                    <v-card>
+                    <v-card dark>
                         <v-card-title
-                        class="headline grey lighten-2"
+                        class="pink lighten-2"
                         primary-title
                         >
-                        GENTLEMAN ONLY
+                         <v-row justify="center" class="text-center">
+                           <v-col class="py-0">
+                             <span class="text-center"> GENTLE LADIES ONLY</span>
+                           </v-col>
+                         </v-row>
                         </v-card-title>
 
                         <v-divider></v-divider>
@@ -28,7 +32,7 @@
                          <v-text-field
                          v-model="password"
                             label="Password"
-
+                            type="password"
                         ></v-text-field>
                            </v-col>
                            <v-col v-if="$store.state.error.length > 0" cols="12">

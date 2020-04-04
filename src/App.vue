@@ -6,7 +6,7 @@
       color="#2E343B"
       dark
     >
-      <h2>SMA</h2>
+      <h2 class="blue--text darken-2 dark font-weight-light">GENTLE API</h2>
       <v-spacer></v-spacer>
       <v-btn  text tile @click="logout">logout<v-icon>mdi-exit</v-icon></v-btn>
       <v-btn

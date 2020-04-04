@@ -6,9 +6,13 @@ import vuetify from './plugins/vuetify'
 import Clipboard from 'v-clipboard'
 import * as firebase from 'firebase'
 import EditProject from './components/EditProject.vue'
+import EditApi from './components/EditApi.vue'
+
 Vue.use(Clipboard)
 Vue.config.productionTip = false
+
 Vue.component('edit-dialog', EditProject)
+Vue.component('edit-api-dialog', EditApi)
 new Vue({
   router,
   store,

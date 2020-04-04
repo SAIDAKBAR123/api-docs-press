@@ -20,7 +20,7 @@
                                <v-text-field v-model="project.description" label="Short Description"></v-text-field>
                            </v-col>
                            <v-col cols="auto">
-                                <v-btn color="success" @click="createProject" tile large>Create</v-btn>
+                                <v-btn color="blue lighten-1" @click="createProject"  large>Create</v-btn>
                                  <v-btn class="mx-2" color="error" @click="newProject.flag = false" tile large text>Cancel</v-btn>
                            </v-col>
                        </v-row>
