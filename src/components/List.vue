@@ -31,14 +31,16 @@
         ></v-text-field>
       </v-col>
       <v-col cols="auto">
-        <v-btn color="blue darken-3" dark rounded raised @click="addCommit"
-          >Commit</v-btn
+        <v-btn color="blue darken-3" dark rounded @click="dialog = true"
+          >Continue</v-btn
         >
       </v-col>
     </v-row>
     <template v-if="codes.length > 0">
+      <v-row>
+        <v-col cols="8" md="8" >
       <v-row class="my-2" justify="start" v-for="(item, i) in codes" :key="i">
-        <v-col class="py-0" cols="8">
+        <v-col class="py-0">
           <v-card class="py-0">
             <v-card-title
               ><p class="descript">// {{ item.title }}</p>
@@ -56,7 +58,7 @@
               align-self="center"
             >
               <v-col cols="1">
-                <v-btn text outlined :color="item.color">{{ item.type }}</v-btn>
+                <v-btn text outlined :color="item.color" @click="example.code = item.description">{{ item.type }}</v-btn>
               </v-col>
               <v-col cols="8">
                 <p class="codeing pt-2">{{ item.code }}</p>
@@ -69,9 +71,11 @@
             </v-row>
           </v-card>
         </v-col>
-        <v-col class="py-0" cols="auto">
+      </v-row>
+        </v-col>
+           <v-col  class="my-2" cols="4">
           <v-card tile flat class="transparent">
-            <prism-editor readonly :code="code" lineNumbers language="js"></prism-editor>
+            <prism-editor readonly :code="example.code" lineNumbers language="js"></prism-editor>
           </v-card>
         </v-col>
       </v-row>
@@ -81,6 +85,37 @@
       indeterminate
       color="yellow darken-2"
     ></v-progress-linear>
+    <!---Diallog herew -->
+     <v-dialog
+      v-model="dialog"
+      width="700"
+    >
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Expected Value
+        </v-card-title>
+
+        <v-card-text>
+             <prism-editor v-model="description" :code="description" lineNumbers language="js"></prism-editor>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="addCommit"
+          >
+            Commit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -89,6 +124,10 @@ export default {
   name: 'HelloWorld',
   props: ['id'],
   data: () => ({
+    dialog: false,
+    example: {
+      code: ''
+    },
     code: `const routes = [
   {
     path: '/',
@@ -105,6 +144,7 @@ export default {
 ]`,
     selectedType: '',
     codeSource: '',
+    description: ' // your js here',
     define: '',
     items: [
       { id: 1, name: 'GET', color: '' },
@@ -127,6 +167,7 @@ export default {
       this.$clipboard(code)
     },
     addCommit () {
+      this.dialog = false
       if (this.selectedType === 'DELETE') {
         this.$store
           .dispatch('addApi', {
@@ -135,7 +176,7 @@ export default {
             color: 'error',
             title: this.define,
             code: this.codeSource,
-            description: '//test mode is on',
+            description: this.description,
             creatorId: this.$store.state.user.id
           })
           .then(() => {
@@ -154,7 +195,7 @@ export default {
             color: 'primary',
             title: this.define,
             code: this.codeSource,
-            description: '//test mode is on',
+            description: this.description,
             creatorId: this.$store.state.user.id
           })
           .then(() => {
@@ -173,7 +214,7 @@ export default {
             color: 'success',
             title: this.define,
             code: this.codeSource,
-            description: '//test mode is on',
+            description: this.description,
             creatorId: this.$store.state.user.id
           })
           .then(() => {
@@ -192,7 +233,7 @@ export default {
             color: 'warning',
             title: this.define,
             code: this.codeSource,
-            description: '//test mode is on',
+            description: this.description,
             creatorId: this.$store.state.user.id
           })
           .then(() => {
