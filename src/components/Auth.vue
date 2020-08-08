@@ -15,7 +15,7 @@
                         >
                          <v-row justify="center" class="text-center">
                            <v-col class="py-0">
-                             <span class="text-center"> GENTLE LADIES ONLY</span>
+                             <span class="text-center"> AUTH YOURSELF</span>
                            </v-col>
                          </v-row>
                         </v-card-title>
